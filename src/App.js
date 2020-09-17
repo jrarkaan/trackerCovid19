@@ -33,7 +33,7 @@ function App() {
       .then(response=> response.json())
       .then(data => {
         setCountryInfo(data);
-      })
+      }) // at lest 2:13:33 <--
   },[]);
 
   const onCountryChange = async(event)=>{
