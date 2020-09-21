@@ -54,20 +54,32 @@ function App() {
 
   const onCountryChange = async(event)=>{
     const countryCode = event.target.value;
-    // console.log(countryCode);
-    setCountry(countryCode);
-    const url = countryCode === "worldwide"
-      ? "https://disease.sh/v3/covid-19/all"
-        : `https://disease.sh/v3/covid-19/countries/${countryCode}`
-    await fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setCountry(countryCode);
-        // All of the data from the country response
-        setCountryInfo(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(4);
-      });
+    if(countryCode === "worldwide"){
+      const url = "https://disease.sh/v3/covid-19/all";
+      await fetch(url)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setCountry(countryCode);
+          setCountryInfo(data);
+          setMapCenter({lat: 34.80746, lng: -40.4796});
+          setMapZoom(2);
+        })
+    }else{
+      const url = `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+      await fetch(url)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setCountry(countryCode);
+          // All of the data from the country response
+          setCountryInfo(data);
+          setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+          setMapZoom(4);
+        });
+    }
   };
 // isRed is passing in table.js
 //  console.log("country info", countryInfo);
