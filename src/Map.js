@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { Component, useState, useEffect } from 'react';
+import { Map as LeafletMap, TileLayer } from "react-leaflet";
+import { showDataOnMap } from './util';
+import "./Map.css";
 
-const Map = ()=>{
+const Map = ({ countries, casesType, center, zoom })=>{
   return(
-    <h1 className="map">i am a map</h1>
+    <div className="map">
+      <LeafletMap center={center} zoom={zoom}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        />
+      {/* loop through countries and draw circles on the screen */}
+        {showDataOnMap(countries, casesType)}
+      </LeafletMap>
+    </div>
   );
 }
 
